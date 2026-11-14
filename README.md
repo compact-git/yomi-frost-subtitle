@@ -35,7 +35,7 @@ Yomi Frost Web の字幕を、**自分の画面に「枠なし・背景透明・
    - `.github` フォルダ(中の `workflows/build.yml`)も必ず入れてください。エクスプローラーで見えない時は「表示 → 隠しファイル」をオン
    - アップロード画面でフォルダごとドロップすると、フォルダ構成のまま入ります
 3. 「Actions」タブで `build-exe` が動き始めます(5〜10分)。緑のチェックになったら、その実行結果を開いて下の **Artifacts → YomiFrostSubtitle** をダウンロード(zip の中に exe があります)
-4. 公開したい時は、「Releases → Create a new release」でタグを `v2.7.1` などにして公開すると、exe が自動で Releases に添付されます。
+4. 公開したい時は、「Releases → Create a new release」でタグを `v2.7.1` などにして公開すると、もう一度ビルドが動いて、exe がそのリリースに自動で添付されます。
    Yomi Frost Web の `config.js` の `exeRepo`(初期値 `compact-git/yomi-frost-subtitle`)にこのリポジトリを指定しておくと、字幕タブの「⬇ 補助exeをダウンロード」ボタンが最新リリースの exe を直接ダウンロードします(リポジトリは Public にしてね)
 - `subrender.js` は Yomi Frost Web と同じファイルです。アプリ側で字幕の描き方を変えた時は、これも差し替えてビルドし直してください
 
