@@ -1,8 +1,10 @@
 name: build-exe
+# main に変更を置くとビルドします。Releases でリリース(タグ例: v2.7.1)を公開すると、作った exe をそのリリースに自動で添付します。
 on:
   push:
     branches: [main]
-    tags: ['v*']
+  release:
+    types: [published]
   workflow_dispatch:
 permissions:
   contents: write
