@@ -1,10 +1,10 @@
-# Yomi Frost 字幕(補助exe) v2.7.0
+# Yomi Frost 字幕(補助exe) v2.7.1
 
 Yomi Frost Web の字幕を、**自分の画面に「枠なし・背景透明・最前面」**で重ねて表示する Windows 用の補助アプリです。
 クリックは後ろの窓に通り抜けるので、ゲームや作業のじゃまになりません。
 
 ## 使い方
-1. `YomiFrostSubtitle_v2.7.0.exe` をダブルクリックで起動(インストール不要)
+1. `YomiFrostSubtitle_v2.7.1.exe` をダブルクリックで起動(インストール不要)
    - 初回は Windows の「PC を保護しました」が出ることがあります(署名なしのため)。「詳細情報」→「実行」で起動できます
    - 起動するとタスクトレイ(画面右下)に Yomi Frost のアイコンが出ます
 2. Yomi Frost Web の「🪟 字幕」タブ →「🧩 補助exe」で **補助exeに字幕を送る** をオン
@@ -35,8 +35,8 @@ Yomi Frost Web の字幕を、**自分の画面に「枠なし・背景透明・
    - `.github` フォルダ(中の `workflows/build.yml`)も必ず入れてください。エクスプローラーで見えない時は「表示 → 隠しファイル」をオン
    - アップロード画面でフォルダごとドロップすると、フォルダ構成のまま入ります
 3. 「Actions」タブで `build-exe` が動き始めます(5〜10分)。緑のチェックになったら、その実行結果を開いて下の **Artifacts → YomiFrostSubtitle** をダウンロード(zip の中に exe があります)
-4. 公開したい時は、「Releases → Create a new release」でタグを `v2.7.0` にして公開すると、exe が自動で Releases に添付されます。
-   そのURLを Yomi Frost Web の `config.js` の `exeUrl` に入れると、字幕タブに「⬇ 補助exeをダウンロード」ボタンが出ます
+4. 公開したい時は、「Releases → Create a new release」でタグを `v2.7.1` などにして公開すると、exe が自動で Releases に添付されます。
+   Yomi Frost Web の `config.js` の `exeRepo`(初期値 `compact-git/yomi-frost-subtitle`)にこのリポジトリを指定しておくと、字幕タブの「⬇ 補助exeをダウンロード」ボタンが最新リリースの exe を直接ダウンロードします(リポジトリは Public にしてね)
 - `subrender.js` は Yomi Frost Web と同じファイルです。アプリ側で字幕の描き方を変えた時は、これも差し替えてビルドし直してください
 
 ## ファイル
@@ -52,4 +52,5 @@ Yomi Frost Web の字幕を、**自分の画面に「枠なし・背景透明・
 Electron(MIT)と ws(MIT)を使っています。
 
 ## 更新履歴
+- v2.7.1 ビルド手順を Node.js 24 対応の actions に更新(checkout v5 / setup-node v5 / upload-artifact v6)、.gitignore を追加
 - v2.7.0 初版
