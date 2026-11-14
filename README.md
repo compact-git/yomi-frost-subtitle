@@ -1,13 +1,13 @@
-# Yomi Frost 字幕(補助exe) v2.7.1
+# Yomi Frost 字幕(補助exe) v2.7.3
 
 Yomi Frost Web の字幕を、**自分の画面に「枠なし・背景透明・最前面」**で重ねて表示する Windows 用の補助アプリです。
 クリックは後ろの窓に通り抜けるので、ゲームや作業のじゃまになりません。
 
 ## 使い方
-1. `YomiFrostSubtitle_v2.7.1.exe` をダブルクリックで起動(インストール不要)
+1. `YomiFrostSubtitle_v2.7.3.exe` をダブルクリックで起動(インストール不要)
    - 初回は Windows の「PC を保護しました」が出ることがあります(署名なしのため)。「詳細情報」→「実行」で起動できます
    - 起動するとタスクトレイ(画面右下)に Yomi Frost のアイコンが出ます
-2. Yomi Frost Web の「🪟 字幕」タブ →「🧩 補助exe」で **補助exeに字幕を送る** をオン
+2. Yomi Frost Web の「🪟 字幕」タブ →「🧩 補助exe」で **🔌 接続する** を押す(「補助exeに字幕を送る」は初期値でオン。一度つながれば、次からはアプリを開くだけで自動で接続します)
    - 初回は Chrome が「このデバイス上のアプリへのアクセス」の許可を求めるので「許可」
    - 「🧩 補助exeと接続中(v2.7.0)」と出ればOK
 3. 出したい字幕の「出し先」で **🧩 補助exe** にチェック(初期値でオン)
@@ -47,11 +47,12 @@ Yomi Frost Web の字幕を、**自分の画面に「枠なし・背景透明・
 - `package.json` 設定(Electron / electron-builder、portable exe)
 - `.github/workflows/build.yml` GitHub Actions のビルドと公開の手順
 - `RELEASE_NOTES.md` Releases に載せる説明文
-- `build/icon.ico`・`build/icon.png`・`tray.png` アイコン
+- `build/icon.ico`・`build/icon.png`・`build/icon.svg`・`tray.png`・`tray@2x.png` アイコン
 
 ## 仕組みとライセンス
 Electron(MIT)と ws(MIT)を使っています。
 
 ## 更新履歴
+- v2.7.3 アイコンを変更(シアンの背景・お皿に乗った Yomi ちゃん)
 - v2.7.1 ビルド手順を Node.js 24 対応の actions に更新(checkout v5 / setup-node v5 / upload-artifact v6)、.gitignore を追加
 - v2.7.0 初版

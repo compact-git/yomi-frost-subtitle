@@ -1,7 +1,7 @@
 {
   "name": "yomi-frost-subtitle",
   "productName": "Yomi Frost 字幕",
-  "version": "2.7.1",
+  "version": "2.7.3",
   "description": "Yomi Frost Web の字幕を、自分の画面に枠なし・透明・最前面で表示する補助アプリ",
   "main": "main.js",
   "author": "compact",
@@ -22,7 +22,7 @@
     "appId": "jp.compact.yomifrost.subtitle",
     "productName": "Yomi Frost 字幕",
     "artifactName": "YomiFrostSubtitle_v${version}.exe",
-    "files": ["main.js", "preload.js", "overlay.html", "overlay.js", "subrender.js", "tray.png", "build/icon.png", "package.json"],
+    "files": ["main.js", "preload.js", "overlay.html", "overlay.js", "subrender.js", "tray.png", "tray@2x.png", "build/icon.png", "package.json"],
     "directories": { "output": "dist", "buildResources": "build" },
     "win": { "target": [{ "target": "portable", "arch": ["x64"] }], "icon": "build/icon.ico" },
     "portable": { "requestExecutionLevel": "user" }
