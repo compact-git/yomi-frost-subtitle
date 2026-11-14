@@ -1,5 +1,7 @@
 name: build-exe
-# main に変更を置くとビルドします。Releases でリリース(タグ例: v2.7.1)を公開すると、作った exe をそのリリースに自動で添付します。
+# main に変更を置くと Windows 用の exe をビルドします。
+# package.json の version が新しい版(まだ Releases に無い版)なら、ビルドした exe を Releases に自動で公開します(タグ v<版>)。
+# 手動で Releases にリリースを公開した時も、そのリリースに exe を添付します。
 on:
   push:
     branches: [main]
@@ -11,6 +13,9 @@ permissions:
 jobs:
   build:
     runs-on: windows-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -24,7 +29,18 @@ jobs:
         with:
           name: YomiFrostSubtitle
           path: dist/*.exe
-      - if: startsWith(github.ref, 'refs/tags/v')
-        uses: softprops/action-gh-release@v2
-        with:
-          files: dist/*.exe
+      - name: 新しい版なら Releases に公開
+        if: github.event_name != 'release'
+        shell: bash
+        run: |
+          v=$(node -p "require('./package.json').version")
+          if gh release view "v$v" >/dev/null 2>&1; then
+            echo "v$v はもう公開済みなので、公開はしません"
+          else
+            notes=RELEASE_NOTES.md; [ -f "$notes" ] || { echo "Yomi Frost 字幕 v$v" > /tmp/notes.md; notes=/tmp/notes.md; }
+            gh release create "v$v" dist/*.exe --target "$GITHUB_SHA" --title "Yomi Frost 字幕 v$v" --notes-file "$notes"
+          fi
+      - name: 公開したリリースに exe を添付
+        if: github.event_name == 'release'
+        shell: bash
+        run: gh release upload "${{ github.event.release.tag_name }}" dist/*.exe --clobber
