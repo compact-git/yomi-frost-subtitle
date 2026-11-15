@@ -1,4 +1,4 @@
-/* Yomi Frost 字幕(補助exe) v2.7.0
+/* Yomi Frost 字幕(補助exe) v2.7.4
  * Yomi Frost Web から字幕のデータを受け取り(127.0.0.1 の WebSocket)、
  * 自分の画面に「枠なし・透明・最前面・クリックが通り抜ける」窓で表示する。
  */
@@ -10,6 +10,9 @@ const { WebSocketServer } = require('ws');
 
 const VERSION = app.getVersion();
 const SHORTCUT = 'Control+Alt+Y';
+const PROTOCOL = 'yomifrost';
+/** exe の本当の場所(portable 版は一時フォルダに展開して動くので、元の exe の場所を使う) */
+const EXE_PATH = process.env.PORTABLE_EXECUTABLE_FILE || process.execPath;
 const DEFAULT_ORIGINS = ['https://yomi.rider.tokyo', 'https://*.pages.dev', 'http://localhost:*', 'http://127.0.0.1:*'];
 
 // ---------- 設定(ユーザーデータのフォルダに保存) ----------
@@ -99,6 +102,7 @@ function buildMenu() {
       })),
     },
     { type: 'separator' },
+    { label: 'Windows の起動時に起動する', type: 'checkbox', checked: loginItem(), click: m => setLoginItem(m.checked) },
     { label: '設定ファイルを開く(ポート・許可するサイト)', click: () => { saveCfg(); shell.openPath(cfgPath); } },
     { label: '終了', click: () => app.quit() },
   ]);
@@ -133,9 +137,27 @@ function startServer() {
 }
 
 // ---------- 起動 ----------
+/**
+ * 自分の保存場所を Windows に登録する(yomifrost:// リンクで、アプリから起動できるようにする)。
+ * exe を移動・入れ替えた時も、新しい exe を一度起動すれば登録し直される。
+ */
+function registerProtocol() {
+  try {
+    if (process.defaultApp) app.setAsDefaultProtocolClient(PROTOCOL, process.execPath, [path.resolve(process.argv[1] || '.')]);
+    else app.setAsDefaultProtocolClient(PROTOCOL, EXE_PATH, []);
+  } catch (e) { console.warn('protocol', e); }
+}
+function loginItem() { try { return app.getLoginItemSettings({ path: EXE_PATH }).openAtLogin; } catch (e) { return false; } }
+function setLoginItem(on) { try { app.setLoginItemSettings({ openAtLogin: !!on, path: EXE_PATH }); } catch (e) {} buildMenu(); }
+const fromLink = argv => (argv || []).some(a => String(a).toLowerCase().startsWith(PROTOCOL + '://'));
+
+registerProtocol();
 if (!app.requestSingleInstanceLock()) { app.quit(); }
 else {
-  app.on('second-instance', () => { setEditing(true); });
+  app.on('second-instance', (_e, argv) => {
+    if (fromLink(argv)) { if (cfg.visible === false) setVisible(true); return; }   // アプリから起動された:表示するだけ
+    setEditing(true);                                                            // exe をもう一度ダブルクリック:位置とサイズの調整
+  });
   app.whenReady().then(() => {
     loadCfg();
     createWindow();
