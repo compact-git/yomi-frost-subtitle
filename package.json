@@ -1,7 +1,7 @@
 {
   "name": "yomi-frost-subtitle",
   "productName": "Yomi Frost 字幕",
-  "version": "2.7.4",
+  "version": "2.7.5",
   "description": "Yomi Frost Web の字幕を、自分の画面に枠なし・透明・最前面で表示する補助アプリ",
   "main": "main.js",
   "author": "compact",

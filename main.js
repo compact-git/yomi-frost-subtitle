@@ -1,4 +1,4 @@
-/* Yomi Frost 字幕(補助exe) v2.7.4
+/* Yomi Frost 字幕(補助exe) v2.7.5
  * Yomi Frost Web から字幕のデータを受け取り(127.0.0.1 の WebSocket)、
  * 自分の画面に「枠なし・透明・最前面・クリックが通り抜ける」窓で表示する。
  */
@@ -118,7 +118,7 @@ function startServer() {
   });
   wss.on('connection', ws => {
     clients++; sendState(); buildMenu();
-    ws.send(JSON.stringify({ app: 'yomifrost-exe', version: VERSION }));
+    ws.send(JSON.stringify({ app: 'yomifrost-exe', version: VERSION, path: EXE_PATH }));   // 保存場所をアプリに伝える(表示用)
     if (lastPayload && win) win.webContents.send('payload', lastPayload);
     ws.on('message', raw => {
       let d; try { d = JSON.parse(String(raw)); } catch (e) { return; }
