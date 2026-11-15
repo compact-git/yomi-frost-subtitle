@@ -56,8 +56,36 @@ Yomi Frost Web の字幕を、**自分の画面に「枠なし・背景透明・
 - `RELEASE_NOTES.md` Releases に載せる説明文
 - `build/icon.ico`・`build/icon.png`・`build/icon.svg`・`tray.png`・`tray@2x.png` アイコン
 
+## アンインストール
+インストーラーは使わないので、次の手順で消せます。
+1. トレイのアイコン →「Windows の起動時に起動する」をオフ →「終了」
+2. ダウンロードした exe を削除
+3. 設定フォルダ `%APPDATA%\Yomi Frost 字幕` を削除(位置・大きさなどの設定が入っています)
+4. アプリから起動するためのリンク登録を消す(PowerShell またはコマンドプロンプトで):
+   ```
+   reg delete "HKCU\Software\Classes\yomifrost" /f
+   ```
+
+## Code signing policy
+Free code signing provided by [SignPath.io](https://signpath.io/), certificate by [SignPath Foundation](https://signpath.org/).
+(Status: application to the SignPath Foundation program is pending. Releases are unsigned until it is approved.)
+
+**Team roles**
+- Committers and reviewers: [compact](https://github.com/compact-git)
+- Approvers: [compact](https://github.com/compact-git)
+
+**Privacy policy**
+This program will not transfer any information to other networked systems unless specifically requested by the user or the person installing or operating it.
+It only communicates with Yomi Frost Web on the same PC through a local WebSocket (127.0.0.1).
+
+**Changes to the system**
+- On every launch, it registers the `yomifrost://` URL scheme for the current user (`HKCU\Software\Classes\yomifrost`) so that Yomi Frost Web can start it.
+- Only when the user turns on "Windows の起動時に起動する" in the tray menu, it registers itself to start at login for the current user. Turning the option off removes it.
+- Settings are stored in `%APPDATA%\Yomi Frost 字幕\config.json`.
+- See "アンインストール" above for how to remove everything.
+
 ## 仕組みとライセンス
-Electron(MIT)と ws(MIT)を使っています。
+このアプリ自体は MIT ライセンスです(`LICENSE` を参照)。Electron(MIT)と ws(MIT)を使っています。
 
 ## 更新履歴
 - v2.7.5 アプリとつながった時に保存場所を伝える(アプリに表示)
